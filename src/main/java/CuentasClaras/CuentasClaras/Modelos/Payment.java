@@ -1,0 +1,73 @@
+package CuentasClaras.CuentasClaras.Modelos;
+
+import java.util.Date;
+
+import jakarta.persistence.*;
+
+@Entity
+@Access(AccessType.FIELD)
+@Table(name="payments")
+public class Payment {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
+
+	@Column(name="amount")
+	private double amount;
+	
+	@Column(name="accredited")
+	private boolean accredited;
+	
+	@Column(name="date")
+	private Date date;
+	
+	@OneToOne
+	@JoinColumn(name = "debtor")
+	private User debtor;
+	
+	@OneToOne
+	@JoinColumn(name = "expense")
+	private Expense expense;
+
+
+	public void accredite() {
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public boolean isAccredited() {
+		return accredited;
+	}
+
+	public void setAccredited(boolean accredited) {
+		this.accredited = accredited;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Payment(User debtor, double amount, boolean accredited, Date date) {
+		super();
+		this.amount = amount;
+		this.accredited = accredited;
+		this.date = date;
+	}
+
+	public Payment() {
+		super();
+	}
+
+}
