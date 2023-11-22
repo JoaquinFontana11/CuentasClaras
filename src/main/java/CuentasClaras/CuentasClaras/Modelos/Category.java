@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 
 @Entity
 @Access(AccessType.FIELD)
-@Table(name="categories")
+@Table(name="categories", uniqueConstraints = { 
+		@UniqueConstraint(name = "name", columnNames = { "name" }) 
+		})
 public class Category {
 	
 	@Id
@@ -12,7 +14,7 @@ public class Category {
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "name")
+	@Column(name = "name", unique = true)
 	private String name;
 	
 	@Column(name = "icon")

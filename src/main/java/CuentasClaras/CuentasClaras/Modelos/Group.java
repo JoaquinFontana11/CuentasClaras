@@ -6,20 +6,20 @@ import jakarta.persistence.*;
 
 @Entity
 @Access(AccessType.FIELD)
-@Table(name="party")
+@Table(name = "party")
 public class Group {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@ManyToMany(mappedBy = "groups")
-	private List<User> memebers;
-	
+	private List<User> members;
+
 	@ManyToOne
 	private Category category;
 
@@ -31,25 +31,42 @@ public class Group {
 		this.name = name;
 	}
 
-//	public Category getCategory() {
-//		return category;
-//	}
-//
-//	public void setCategory(Category category) {
-//		this.category = category;
-//	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<User> getMembers() {
+		return members;
+	}
+
+	public void setMembers(List<User> members) {
+		this.members = members;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
 	public Group(String name, Category category) {
 		super();
 		this.name = name;
-		//this.category = category;
+		this.category = category;
 	}
 
 	public Group() {
 		super();
 	}
 
-	public void addMember() {
+	public void addMember(User u) {
+		this.members.add(u);
 	}
 
 	public void addExpence() {

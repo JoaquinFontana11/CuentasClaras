@@ -133,5 +133,11 @@ public class User {
 	public void setSuggestions(List<Suggestion> suggestions) {
 		this.suggestions = suggestions;
 	}
-
+	
+	public void addGroups(Group group) {
+		this.groups.add(group);
+	}
+	
+	
 }
+
