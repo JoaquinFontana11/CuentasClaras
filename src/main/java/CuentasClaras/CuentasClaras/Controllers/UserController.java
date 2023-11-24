@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import CuentasClaras.CuentasClaras.Interfaces.IUser;
-import CuentasClaras.CuentasClaras.Modelos.User;
+import CuentasClaras.CuentasClaras.Modelos.*;
 
 @RestController
 @RequestMapping("users")
@@ -16,6 +16,9 @@ public class UserController {
 
 	@Autowired
 	private IUser service;
+	
+	@Autowired
+	private PaymentController paymentController;
 
 	@GetMapping("/findAll")
 	public ResponseEntity<List<User>> findAll() {
@@ -56,4 +59,30 @@ public class UserController {
 		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 	}
 
+
+    @PostMapping("/addFriend/{id}")
+	public ResponseEntity<?> addFriend(@PathVariable int idUserToAdd, @RequestBody int idUserWhoAdd){
+		User userToAdd = service.findById(idUserToAdd).orElse(null);
+		User userWhoAdd = service.findById(idUserWhoAdd).orElse(null);
+
+		if ((userWhoAdd != null)&&(userToAdd != null)){
+			Invitation invitation = new Invitation(userWhoAdd.getUsername(),false,userToAdd);
+			userToAdd.addInvitation(invitation);
+			service.save(userToAdd);
+			return new ResponseEntity<String>("Invitation sended",HttpStatus.OK);
+		}else{
+			return new ResponseEntity<String>("User not found", HttpStatus.BAD_REQUEST);
+		}
+	}
+    
+    @PostMapping("/pay/{id}")
+    public ResponseEntity<?> pay(@PathVariable int paymentId) {
+    	boolean res = paymentController.updatePayment(paymentId);
+    	if (res) {
+    		return new ResponseEntity<String>("Successful payment",HttpStatus.OK);
+    	} else {
+    		return new ResponseEntity<String>("Payment not found", HttpStatus.BAD_REQUEST);
+    	}
+    	
+    }
 }

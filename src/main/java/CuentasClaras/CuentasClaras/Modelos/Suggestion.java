@@ -22,8 +22,7 @@ public class Suggestion {
     @JoinColumn(name = "suggestId")
     private User suggest;
     
-    public Suggestion(int id, User user, User suggest) {
-        this.id = id;
+    public Suggestion(User user, User suggest) {
         this.user = user;
         this.suggest = suggest;
     }

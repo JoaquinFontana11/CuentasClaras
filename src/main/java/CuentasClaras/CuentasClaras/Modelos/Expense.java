@@ -20,8 +20,8 @@ public abstract class Expense {
 	@Column(name = "img")
 	private String img;
 
-	@OneToOne
-	private Division divisionType;
+	@OneToMany(mappedBy="divisions",cascade = CascadeType.ALL)
+	private List<Division> divisions;
 
 	@Column(name = "isRecurrent")
 	private boolean isRecurrent;
@@ -31,9 +31,6 @@ public abstract class Expense {
 
 	@Column(name = "cantRecurrency")
 	private int cantRecurrency;
-
-	@OneToMany(mappedBy="expense",cascade = CascadeType.ALL)
-	private List<Payment> payments;
 
 	@ManyToOne
 	private Category category;
@@ -53,6 +50,46 @@ public abstract class Expense {
 	//Si es de tipo "user" se utiliza esta variable
 	@ManyToOne
 	private User userOwner;
+	
+
+	public Expense(double amount,String img,List<Division> div,boolean isRecurrent,String recurrency,int cantRecurrency,Category category,String type,List<MultipleUser> amountUsers,Group groupOwner) {
+		super();
+		this.amount = amount;
+		this.img = img;
+		this.divisions = div;
+		this.isRecurrent = isRecurrent;
+		this.recurrency = recurrency;
+		this.cantRecurrency = cantRecurrency;
+		this.category = category;
+		this.type = type;
+		this.amountUsers = amountUsers;
+		this.groupOwner = groupOwner;
+	}
+	
+	public Expense(double amount,String img,List<Division> div,boolean isRecurrent,String recurrency,int cantRecurrency,Category category,String type,User userOwner) {
+		super();
+		this.amount = amount;
+		this.img = img;
+		this.divisions = div;
+		this.isRecurrent = isRecurrent;
+		this.recurrency = recurrency;
+		this.cantRecurrency = cantRecurrency;
+		this.category = category;
+		this.type = type;
+		this.userOwner = userOwner;
+	}
+
+	public Expense() {
+		super();
+	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 	
 	public int getId() {
 		return id;
@@ -76,14 +113,6 @@ public abstract class Expense {
 
 	public void setCantRecurrency(int cantRecurrency) {
 		this.cantRecurrency = cantRecurrency;
-	}
-
-	public List<Payment> getPayments() {
-		return payments;
-	}
-
-	public void setPayments(List<Payment> payments) {
-		this.payments = payments;
 	}
 
 	public Category getCategory() {
@@ -134,12 +163,12 @@ public abstract class Expense {
 		this.img = img;
 	}
 
-	public Division getDivisionType() {
-		return divisionType;
+	public List<Division> getDivisions() {
+		return divisions;
 	}
 
-	public void setDivisionType(Division divisionType) {
-		this.divisionType = divisionType;
+	public void setDivisions(List<Division> divisions) {
+		this.divisions = divisions;
 	}
 
 	public boolean isRecurrent() {
@@ -148,18 +177,6 @@ public abstract class Expense {
 
 	public void setRecurrent(boolean isRecurrent) {
 		this.isRecurrent = isRecurrent;
-	}
-
-	public Expense(double amount, String img, User owner,Division divisionType, boolean isRecurrent) {
-		super();
-		this.amount = amount;
-		this.img = img;
-		this.divisionType = divisionType;
-		this.isRecurrent = isRecurrent;
-	}
-
-	public Expense() {
-		super();
 	}
 
 }

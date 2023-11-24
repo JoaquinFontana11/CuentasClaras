@@ -61,6 +61,7 @@ public class Invitation {
 		super();
 		this.inviteUser = inviteUser;
 		this.isGroup = isGroup;
+		this.user = identifier;
 		this.state = false;
 	}
 
@@ -72,4 +73,12 @@ public class Invitation {
 		this.state = true;
 	}
 
+
+	public User getUser(){
+		return this.user;
+	}
+
+	public void setUser(User user){
+		this.user = user;
+	}
 }

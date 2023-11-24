@@ -1,6 +1,7 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
-import java.util.Date;
+import java.time.*;
+
 
 import jakarta.persistence.*;
 
@@ -21,14 +22,13 @@ public class Payment {
 	private boolean accredited;
 	
 	@Column(name="date")
-	private Date date;
+	private LocalDate date;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "debtor")
 	private User debtor;
 	
-	@OneToOne
-	@JoinColumn(name = "expense")
+	@ManyToOne
 	private Expense expense;
 
 
@@ -51,15 +51,15 @@ public class Payment {
 		this.accredited = accredited;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
-	public Payment(User debtor, double amount, boolean accredited, Date date) {
+	public Payment(User debtor, double amount, boolean accredited, LocalDate date) {
 		super();
 		this.amount = amount;
 		this.accredited = accredited;

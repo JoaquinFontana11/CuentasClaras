@@ -13,6 +13,7 @@ import CuentasClaras.CuentasClaras.Interfaces.ICategory;
 import CuentasClaras.CuentasClaras.Interfaces.IGroup;
 import CuentasClaras.CuentasClaras.Interfaces.IUser;
 import CuentasClaras.CuentasClaras.Modelos.Group;
+import CuentasClaras.CuentasClaras.Modelos.Invitation;
 import CuentasClaras.CuentasClaras.Modelos.User;
 
 @RestController
@@ -26,9 +27,9 @@ public class GroupController {
 	private ICategory categoryService;
 	
 	@PostMapping("/save")
-	public ResponseEntity<Group> save(@RequestBody Group group){
+	public ResponseEntity<?> save(@RequestBody Group group){
 		if ((categoryService.findByname(group.getCategory().getName()).orElse(null)) == null){
-			return new ResponseEntity<Group>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Category not found",HttpStatus.BAD_REQUEST);
 		}else {
 			group.setCategory(categoryService.findByname(group.getCategory().getName()).get());
 		}
@@ -37,16 +38,15 @@ public class GroupController {
 	}
 	
 	@PostMapping("/addMember/{id}")
-	public ResponseEntity<?> addMember(@PathVariable int id, @RequestBody User userName  ){
+	public ResponseEntity<?> addMember(@PathVariable int id, @RequestBody Invitation invitation){
 		Group group = groupService.findById(id).orElse(null);
 		if (group != null) {
-			User user = (User) userService.findByuserName(userName.getUsername()).orElse(null);
+			User user = (User) userService.findById(invitation.getUser().getId()).orElse(null);
 			if (user != null) {
-				group.addMember(user);
-				user.addGroups(group);
-				groupService.save(group);
+				invitation.setUser(user);
+				user.addInvitation(invitation);
 				userService.save(user);
-				return new ResponseEntity<Group>(group,HttpStatus.OK);
+				return new ResponseEntity<Invitation>(invitation,HttpStatus.OK);
 			}else {
 				return new ResponseEntity<String>("User not found",HttpStatus.BAD_REQUEST);
 			}

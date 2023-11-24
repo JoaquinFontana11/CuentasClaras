@@ -138,6 +138,12 @@ public class User {
 		this.groups.add(group);
 	}
 	
-	
+	public void addInvitation(Invitation invitation){
+		this.invitations.add(invitation);
+	}
+
+	public List<Group> getGroups(){
+		return this.getGroups();
+	}
 }
 
