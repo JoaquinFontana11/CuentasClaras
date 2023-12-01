@@ -10,9 +10,9 @@ import CuentasClaras.CuentasClaras.Modelos.Expense;
 public interface IExpense extends CrudRepository<Expense,Integer>{
 
 	
-	@Query("SELECT e FROM expenses e WHERE e.user_owner_id = ?1")
+	@Query(value = "SELECT e FROM expenses e WHERE e.user_owner_id = ?1", nativeQuery = true)
 	public List<Expense> findByUserOwner(int id);
 	
-	@Query("SELECT e FROM expenses e WHERE e.group_owner_id = ?1")
+	@Query(value = "SELECT e FROM expenses e WHERE e.group_owner_id = ?1", nativeQuery = true)
 	public List<Expense> findByGroupOwner(int id);
 }

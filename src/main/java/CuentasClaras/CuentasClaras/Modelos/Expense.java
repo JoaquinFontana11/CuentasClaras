@@ -20,7 +20,7 @@ public abstract class Expense {
 	@Column(name = "img")
 	private String img;
 
-	@OneToMany(mappedBy="divisions",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="expense",cascade = CascadeType.ALL)
 	private List<Division> divisions;
 
 	@Column(name = "isRecurrent")
