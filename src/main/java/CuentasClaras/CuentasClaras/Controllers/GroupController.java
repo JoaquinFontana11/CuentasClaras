@@ -1,13 +1,12 @@
 package CuentasClaras.CuentasClaras.Controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import CuentasClaras.CuentasClaras.Interfaces.ICategory;
 import CuentasClaras.CuentasClaras.Interfaces.IGroup;
@@ -64,6 +63,12 @@ public class GroupController {
 		}else {
 			return new ResponseEntity<String>("Group not found",HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@GetMapping("/findByName/{name}")
+	public Optional<Group> findByName(@PathVariable String name) {
+		Optional<Group> group = groupService.findByname(name);
+		return group;
 	}
 	
 	

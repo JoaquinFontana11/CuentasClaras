@@ -115,7 +115,8 @@ public class User {
 	}
 
 
-	public void addFriend(String email) {
+	public void addFriend(Friendship friend) {
+		friendships.add(friend);
 	}
 
 	public List<Friendship> getFriendships() {

@@ -22,8 +22,7 @@ public class Friendship {
     @JoinColumn(name = "friendId")
     private User friend;
     
-    public Friendship(int id, User user, User friend) {
-        this.id = id;
+    public Friendship(User user, User friend) {
         this.user = user;
         this.friend = friend;
     }

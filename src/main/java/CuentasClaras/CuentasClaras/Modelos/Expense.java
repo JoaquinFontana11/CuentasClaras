@@ -1,5 +1,6 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
+import java.io.Serializable;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -7,8 +8,13 @@ import jakarta.persistence.*;
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "expenses")
-public class Expense {
+public class Expense implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3441111799219876457L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -32,7 +38,7 @@ public class Expense {
 	@Column(name = "cantRecurrency")
 	private int cantRecurrency;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Category category;
 	
 	//"group" o "user"

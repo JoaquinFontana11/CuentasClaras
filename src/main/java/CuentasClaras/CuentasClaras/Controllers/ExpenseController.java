@@ -35,10 +35,10 @@ public class ExpenseController {
 	}
 	
 	@GetMapping("/findByUser/{id}")
-	public ResponseEntity<List<Expense>> findByUserOwner(@PathVariable int id) {
+	public ResponseEntity<?> findByUserOwner(@PathVariable int id) {
 		List<Expense> listExpenses = (List<Expense>) expenseService.findByUserOwner(id);
 		if (listExpenses.size() == 0) {
-			return new ResponseEntity<List<Expense>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("No hay gastos creados por este usuario",HttpStatus.NOT_FOUND);
 		}
 
 		return new ResponseEntity<List<Expense>>(listExpenses, HttpStatus.OK);
@@ -60,6 +60,8 @@ public class ExpenseController {
 		if (expense == null)
 			return new ResponseEntity<Expense>(HttpStatus.NOT_FOUND);
 
+		System.out.println("sex");
+		System.out.println(expense);
 		return new ResponseEntity<Expense>(expense, HttpStatus.OK);
 	}
 	
@@ -77,9 +79,9 @@ public class ExpenseController {
 		if (e == null)
 			return new ResponseEntity<Expense>(HttpStatus.BAD_REQUEST);
 
-		expense.getDivisions().stream().forEach(division -> {
-		    divisionService.save(division);
-		});
+//		expense.getDivisions().stream().forEach(division -> {
+//		    divisionService.save(division);
+//		});
 		return new ResponseEntity<Expense>(HttpStatus.OK);
 	}
 	

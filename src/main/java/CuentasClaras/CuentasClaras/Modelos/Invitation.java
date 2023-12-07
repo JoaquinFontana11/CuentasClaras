@@ -20,8 +20,8 @@ public class Invitation {
 	private boolean state;
 	
 	//emisor
-	@Column(name = "inviteUser")
-	private String inviteUser;
+	@Column(name = "inviteName")
+	private String inviteName;
 	
 	//receptor
     @ManyToOne
@@ -32,12 +32,12 @@ public class Invitation {
 		return id;
 	}
 
-	public String getInviteUser() {
-		return inviteUser;
+	public String getInviteName() {
+		return inviteName;
 	}
 
-	public void setInviteUser(String inviteUser) {
-		this.inviteUser = inviteUser;
+	public void setInviteName(String inviteName) {
+		this.inviteName = inviteName;
 	}
 
 	public boolean isGroup() {
@@ -57,9 +57,9 @@ public class Invitation {
 		this.state = state;
 	}
 
-	public Invitation(String inviteUser,boolean isGroup, User identifier) {
+	public Invitation(String inviteName,boolean isGroup, User identifier) {
 		super();
-		this.inviteUser = inviteUser;
+		this.inviteName = inviteName;
 		this.isGroup = isGroup;
 		this.user = identifier;
 		this.state = false;
