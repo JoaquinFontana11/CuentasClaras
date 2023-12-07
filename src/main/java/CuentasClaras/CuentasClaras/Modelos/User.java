@@ -143,7 +143,7 @@ public class User {
 	}
 
 	public List<Group> getGroups(){
-		return this.getGroups();
+		return groups;
 	}
 }
 

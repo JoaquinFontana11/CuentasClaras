@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "expenses")
-public abstract class Expense {
+public class Expense {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
