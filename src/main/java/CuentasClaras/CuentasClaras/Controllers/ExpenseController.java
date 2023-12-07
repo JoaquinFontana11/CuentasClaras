@@ -68,7 +68,6 @@ public class ExpenseController {
 		expense.getDivisions().stream().forEach(division -> {
 		    Payment p = new Payment(division.getUserOwner(), division.getAmount(), false, LocalDate.now());
 		    paymentService.save(p);
-		    divisionService.save(division);
 		});
 		expense.getAmountUsers().stream().forEach(MUsers -> {
 		    multipleUserService.save(MUsers);
@@ -78,6 +77,9 @@ public class ExpenseController {
 		if (e == null)
 			return new ResponseEntity<Expense>(HttpStatus.BAD_REQUEST);
 
+		expense.getDivisions().stream().forEach(division -> {
+		    divisionService.save(division);
+		});
 		return new ResponseEntity<Expense>(HttpStatus.OK);
 	}
 	
