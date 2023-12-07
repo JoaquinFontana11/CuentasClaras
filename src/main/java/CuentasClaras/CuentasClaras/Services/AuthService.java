@@ -6,6 +6,8 @@ import CuentasClaras.CuentasClaras.Request.AuthDto;
 
 public interface AuthService {
 	
-	public ResponseEntity<String> login(AuthDto authDto);
+	public ResponseEntity<String> login(String userName, String password);
+	
+	
 
 }

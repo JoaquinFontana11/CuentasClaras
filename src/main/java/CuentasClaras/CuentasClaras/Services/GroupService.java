@@ -11,4 +11,5 @@ public interface GroupService {
     public ResponseEntity<?> addMember(int id, Invitation invitation);
     
     public ResponseEntity<?> edit (Group group);
+    
 }

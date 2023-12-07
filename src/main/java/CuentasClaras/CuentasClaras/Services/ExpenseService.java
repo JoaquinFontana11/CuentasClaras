@@ -11,7 +11,7 @@ import CuentasClaras.CuentasClaras.Modelos.Expense;
 public interface ExpenseService {
 	public ResponseEntity<List<Expense>> findAll();
 	
-	public ResponseEntity<List<Expense>> findByUserOwner( int id);
+	public ResponseEntity<List<Expense>> findByUserOwner(int id);
 	
 	public ResponseEntity<List<Expense>> findByGroupOwner(int id);
 	
@@ -19,5 +19,5 @@ public interface ExpenseService {
 	
 	public ResponseEntity<Expense> save(Expense expense);
 	
-	public ResponseEntity<Expense> delete( int id);
+	public ResponseEntity<Expense> delete(int id);
 }
