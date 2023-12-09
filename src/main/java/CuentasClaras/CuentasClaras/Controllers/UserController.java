@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import CuentasClaras.CuentasClaras.Interfaces.IUser;
 import CuentasClaras.CuentasClaras.Modelos.*;
 import CuentasClaras.CuentasClaras.Services.UserService;
+import CuentasClaras.CuentasClaras.ServicesImpl.UserServiceImpl;
 
 @RestController
 @RequestMapping("users")

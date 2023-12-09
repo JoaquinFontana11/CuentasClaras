@@ -15,6 +15,7 @@ import CuentasClaras.CuentasClaras.Services.GroupService;
 @RestController
 @RequestMapping("/group")
 public class GroupController {
+	
 	@Autowired
 	private GroupService groupService;
 	

@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
 import CuentasClaras.CuentasClaras.Interfaces.ISuggestion;
 import CuentasClaras.CuentasClaras.Interfaces.IUser;
 import CuentasClaras.CuentasClaras.Modelos.Group;
@@ -14,6 +16,7 @@ import CuentasClaras.CuentasClaras.Modelos.Suggestion;
 import CuentasClaras.CuentasClaras.Modelos.User;
 import CuentasClaras.CuentasClaras.Services.SuggestionService;
 
+@Service
 public class SuggestionServiceImpl implements SuggestionService{
 
 	@Autowired

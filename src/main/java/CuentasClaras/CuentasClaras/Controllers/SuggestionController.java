@@ -8,10 +8,11 @@ import CuentasClaras.CuentasClaras.Services.SuggestionService;
 @RestController
 @RequestMapping("/suggestions")
 public class SuggestionController {
-    @Autowired
+    
+	@Autowired
     private SuggestionService suggestionService;
 
-    @PostMapping("/findSuggestions/{id}")
+    @PostMapping("/findSuggestions/{idUserToFindSuggestions}")
     public ResponseEntity<?> findSuggestions(@PathVariable int idUserToFindSuggestions){
     	return this.suggestionService.findSuggestions(idUserToFindSuggestions);
     }
