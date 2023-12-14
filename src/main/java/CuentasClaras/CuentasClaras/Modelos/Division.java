@@ -1,5 +1,6 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
+
 import jakarta.persistence.*;
 
 @Entity
@@ -18,8 +19,8 @@ public class Division {
 	@ManyToOne
 	private User userOwner;
 	
-	 @ManyToOne
-	 private Expense expense;
+	@ManyToOne
+	private Expense expense;
 
 	public Division() {
 		super();

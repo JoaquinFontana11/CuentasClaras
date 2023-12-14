@@ -14,7 +14,7 @@ public class User {
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "userName")
+	@Column(name = "userName", unique = true)
 	private String userName;
 	
 	@Column(name = "name")
@@ -39,6 +39,7 @@ public class User {
 	@OneToMany(mappedBy="debtor",cascade = CascadeType.ALL)
 	private List<Payment> payments;
 	
+
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(
 			name = "user_groups", 
@@ -50,6 +51,7 @@ public class User {
 	@OneToMany(mappedBy="friend")
 	private List<Friendship> friendships;
 	
+
 	@OneToMany(mappedBy="suggest")
 	private List<Suggestion> suggestions;
 	

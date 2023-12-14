@@ -10,9 +10,7 @@ import jakarta.persistence.*;
 @Table(name = "expenses")
 public class Expense implements Serializable {
 	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 3441111799219876457L;
 
 	@Id

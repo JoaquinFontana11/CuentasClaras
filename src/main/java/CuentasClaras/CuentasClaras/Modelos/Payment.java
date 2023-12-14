@@ -2,7 +2,6 @@ package CuentasClaras.CuentasClaras.Modelos;
 
 import java.time.*;
 
-
 import jakarta.persistence.*;
 
 @Entity
@@ -27,7 +26,7 @@ public class Payment {
 	@ManyToOne
 	@JoinColumn(name = "debtor")
 	private User debtor;
-	
+
 	@ManyToOne
 	private Expense expense;
 

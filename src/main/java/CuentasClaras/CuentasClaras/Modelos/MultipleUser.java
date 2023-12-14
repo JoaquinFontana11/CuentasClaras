@@ -21,4 +21,50 @@ public class MultipleUser {
 	@OneToOne
 	@JoinColumn(name="expense")
 	private Expense expense;
+	
+
+	public MultipleUser() {
+		super();
+	}
+	
+	
+
+	public MultipleUser(double amount, User userOwner, Expense expense) {
+		super();
+		this.amount = amount;
+		this.userOwner = userOwner;
+		this.expense = expense;
+	}
+
+
+
+	public int getId() {
+		return id;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public User getUserOwner() {
+		return userOwner;
+	}
+
+	public void setUserOwner(User userOwner) {
+		this.userOwner = userOwner;
+	}
+
+	public Expense getExpense() {
+		return expense;
+	}
+
+	public void setExpense(Expense expense) {
+		this.expense = expense;
+	}
+	
+	
 }

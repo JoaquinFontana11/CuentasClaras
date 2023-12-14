@@ -9,80 +9,48 @@ import org.springframework.web.bind.annotation.*;
 
 import CuentasClaras.CuentasClaras.Interfaces.IUser;
 import CuentasClaras.CuentasClaras.Modelos.*;
+import CuentasClaras.CuentasClaras.Services.UserService;
+import CuentasClaras.CuentasClaras.ServicesImpl.UserServiceImpl;
 
 @RestController
 @RequestMapping("users")
 public class UserController {
 
 	@Autowired
-	private IUser service;
+	private UserService userService;
 	
-	@Autowired
-	private PaymentController paymentController;
 
 	@GetMapping("/findAll")
 	public ResponseEntity<List<User>> findAll() {
-		List<User> listUser = (List<User>) service.findAll();
-		if (listUser.size() == 0) {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
-		}
-
-		return new ResponseEntity(listUser, HttpStatus.OK);
+		return userService.findAll();
 	}
 
 	@GetMapping("/find/{id}")
 	public ResponseEntity<User> findById(@PathVariable int id) {
-		User user = service.findById(id).orElse(null);
-		if (user == null)
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-
-		return new ResponseEntity<User>(user, HttpStatus.OK);
+		return userService.findById(id);
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity save(@RequestBody User user) {
-		service.save(user);
-		User u = service.findById(user.getId()).orElse(null);
-		if (u == null)
-			return new ResponseEntity(HttpStatus.BAD_REQUEST);
-
-		return new ResponseEntity(HttpStatus.OK);
+	public ResponseEntity<?> save(@RequestBody User user) {
+		return userService.save(user);
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity delete(@PathVariable int id) {
-		service.deleteById(id);
-		User u = service.findById(id).orElse(null);
-		if (u == null)
-			return new ResponseEntity(HttpStatus.OK);
-
-		return new ResponseEntity(HttpStatus.BAD_REQUEST);
+	public ResponseEntity<?> delete(@PathVariable int id) {
+		return userService.delete(id);
 	}
 
 
-    @PostMapping("/addFriend/{id}")
+    @PostMapping("/addFriend/{idUserToAdd}")
 	public ResponseEntity<?> addFriend(@PathVariable int idUserToAdd, @RequestBody int idUserWhoAdd){
-		User userToAdd = service.findById(idUserToAdd).orElse(null);
-		User userWhoAdd = service.findById(idUserWhoAdd).orElse(null);
-
-		if ((userWhoAdd != null)&&(userToAdd != null)){
-			Invitation invitation = new Invitation(userWhoAdd.getUsername(),false,userToAdd);
-			userToAdd.addInvitation(invitation);
-			service.save(userToAdd);
-			return new ResponseEntity<String>("Invitation sended",HttpStatus.OK);
-		}else{
-			return new ResponseEntity<String>("User not found", HttpStatus.BAD_REQUEST);
-		}
+		return userService.addFriend(idUserToAdd, idUserWhoAdd);
 	}
     
-    @PostMapping("/pay/{id}")
+    @PostMapping("/pay/{paymentId}")
     public ResponseEntity<?> pay(@PathVariable int paymentId) {
-    	boolean res = paymentController.updatePayment(paymentId);
-    	if (res) {
-    		return new ResponseEntity<String>("Successful payment",HttpStatus.OK);
-    	} else {
-    		return new ResponseEntity<String>("Payment not found", HttpStatus.BAD_REQUEST);
-    	}
+    	return userService.pay(paymentId);
     	
     }
+    
+    
 }

@@ -1,98 +1,55 @@
 package CuentasClaras.CuentasClaras.Controllers;
 
-import java.time.LocalDate;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import CuentasClaras.CuentasClaras.Interfaces.*;
 import CuentasClaras.CuentasClaras.Modelos.*;
+import CuentasClaras.CuentasClaras.Services.ExpenseService;
 
 @RestController
 @RequestMapping("expenses")
 public class ExpenseController {
 	
 	@Autowired
-	private IExpense expenseService;
-	@Autowired
-	private IPayment paymentService;
-	@Autowired
-	private IDivision divisionService;
-	@Autowired
-	private IMultipleUser multipleUserService;
+	private ExpenseService expenseService;
 	
 	@GetMapping("/findAll")
-	public ResponseEntity<List<Expense>> findAll() {
-		List<Expense> listExpenses = (List<Expense>) expenseService.findAll();
-		if (listExpenses.size() == 0) {
-			return new ResponseEntity<List<Expense>>(HttpStatus.NOT_FOUND);
-		}
-
-		return new ResponseEntity<List<Expense>>(listExpenses, HttpStatus.OK);
+	public ResponseEntity<?> findAll() {
+		return this.expenseService.findAll();
 	}
 	
 	@GetMapping("/findByUser/{id}")
-	public ResponseEntity<?> findByUserOwner(@PathVariable int id) {
-		List<Expense> listExpenses = (List<Expense>) expenseService.findByUserOwner(id);
-		if (listExpenses.size() == 0) {
-			return new ResponseEntity<String>("No hay gastos creados por este usuario",HttpStatus.NOT_FOUND);
-		}
+	public ResponseEntity<List<Expense>> findByUserOwner(@PathVariable int id) {
+		return this.expenseService.findByUserOwner(id);
 
-		return new ResponseEntity<List<Expense>>(listExpenses, HttpStatus.OK);
 	}
 	
 	@GetMapping("/findByGroup/{id}")
 	public ResponseEntity<List<Expense>> findByGroupOwner(@PathVariable int id) {
-		List<Expense> listExpenses = (List<Expense>) expenseService.findByGroupOwner(id);
-		if (listExpenses.size() == 0) {
-			return new ResponseEntity<List<Expense>>(HttpStatus.NOT_FOUND);
-		}
-
-		return new ResponseEntity<List<Expense>>(listExpenses, HttpStatus.OK);
+		return this.expenseService.findByGroupOwner(id);
 	}
 	
 	@GetMapping("/find/{id}")
 	public ResponseEntity<Expense> findById(@PathVariable int id) {
-		Expense expense = expenseService.findById(id).orElse(null);
-		if (expense == null)
-			return new ResponseEntity<Expense>(HttpStatus.NOT_FOUND);
-
-		System.out.println("sex");
-		System.out.println(expense);
-		return new ResponseEntity<Expense>(expense, HttpStatus.OK);
+		return this.expenseService.findById(id);
 	}
 	
 	@PostMapping("/save")
-	public ResponseEntity<Expense> save(@RequestBody Expense expense) {
-		expense.getDivisions().stream().forEach(division -> {
-		    Payment p = new Payment(division.getUserOwner(), division.getAmount(), false, LocalDate.now());
-		    paymentService.save(p);
-		});
-		expense.getAmountUsers().stream().forEach(MUsers -> {
-		    multipleUserService.save(MUsers);
-		});
-		expenseService.save(expense);
-		Expense e = expenseService.findById(expense.getId()).orElse(null);
-		if (e == null)
-			return new ResponseEntity<Expense>(HttpStatus.BAD_REQUEST);
-
-//		expense.getDivisions().stream().forEach(division -> {
-//		    divisionService.save(division);
-//		});
-		return new ResponseEntity<Expense>(HttpStatus.OK);
+	public ResponseEntity<?> save(@RequestBody Expense expense) {
+		return this.expenseService.save(expense);
+	}
+	
+	@PostMapping("/edit")
+	public ResponseEntity<?> edit(@RequestBody Expense expense) {
+		return this.expenseService.edit(expense);
 	}
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Expense> delete(@PathVariable int id) {
-		expenseService.deleteById(id);
-		Expense e = expenseService.findById(id).orElse(null);
-		if (e == null)
-			return new ResponseEntity<Expense>(HttpStatus.OK);
-
-		return new ResponseEntity<Expense>(HttpStatus.BAD_REQUEST);
+		return this.expenseService.delete(id);
 	}
 
 }

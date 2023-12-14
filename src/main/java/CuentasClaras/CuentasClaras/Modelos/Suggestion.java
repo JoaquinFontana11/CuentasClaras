@@ -1,6 +1,7 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
 import java.util.*;
+
 import jakarta.persistence.*;
 
 

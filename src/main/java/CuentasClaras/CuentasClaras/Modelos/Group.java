@@ -1,6 +1,8 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
-import java.util.List;
+import java.util.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
 
@@ -59,6 +61,7 @@ public class Group {
 		super();
 		this.name = name;
 		this.category = category;
+		this.members = new ArrayList<User>();
 	}
 
 	public Group() {
