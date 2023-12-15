@@ -53,9 +53,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	public ResponseEntity<List<Expense>> findByGroupOwner(int id) {
 		List<Expense> listExpenses = (List<Expense>) expenseService.findByGroupOwner(id);
-		if (listExpenses.size() == 0) {
-			return new ResponseEntity<List<Expense>>(HttpStatus.NOT_FOUND);
-		}
 
 		return new ResponseEntity<List<Expense>>(listExpenses, HttpStatus.OK);
 	}
@@ -82,6 +79,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		}
 
 		expenseService.save(expense);
+
 		Expense e = expenseService.findById(expense.getId()).orElse(null);
 		if (e == null)
 			return new ResponseEntity<Expense>(HttpStatus.BAD_REQUEST);
@@ -103,6 +101,11 @@ public class ExpenseServiceImpl implements ExpenseService {
 		Expense expenseSearched = expenseService.findById(expense.getId()).orElse(null);
 		if (expenseSearched == null)
 			return new ResponseEntity<String>("Expense Not Found", HttpStatus.BAD_REQUEST);
+
+		if ((categoryService.findByname(expense.getCategory().getName()).orElse(null)) == null)
+			return new ResponseEntity<String>("Category not found", HttpStatus.BAD_REQUEST);
+		
+		expense.setCategory(categoryService.findByname(expense.getCategory().getName()).get());
 
 		this.expenseService.save(expense);
 		expenseSearched = expenseService.findById(expense.getId()).orElse(null);

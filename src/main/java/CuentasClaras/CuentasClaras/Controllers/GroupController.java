@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import CuentasClaras.CuentasClaras.Modelos.Group;
 import CuentasClaras.CuentasClaras.Modelos.Invitation;
+import CuentasClaras.CuentasClaras.Modelos.User;
+import CuentasClaras.CuentasClaras.Request.AddMemberDTO;
 import CuentasClaras.CuentasClaras.Services.GroupService;
 
 @RestController
@@ -24,7 +26,14 @@ public class GroupController {
 	}
 	
 	@PostMapping("/addMember/{id}")
-	public ResponseEntity<?> addMember(@PathVariable int id, @RequestBody Invitation invitation){
+	public ResponseEntity<?> addMember(@PathVariable int id, @RequestBody AddMemberDTO invitationDto){
+		Invitation invitation = new Invitation();
+		invitation.setGroup(invitationDto.isGroup());
+		invitation.setInviteName(invitationDto.inviteName());
+		User user = new User();
+		user.setId(invitationDto.userId());
+		invitation.setUser(user);
+		invitation.setState(false);
 		return groupService.addMember(id, invitation);
 	}
 	
