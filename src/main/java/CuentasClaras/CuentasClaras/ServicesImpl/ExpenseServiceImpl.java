@@ -36,7 +36,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		List<Expense> listExpenses = new ArrayList<Expense>();
 		iterable.forEach(listExpenses::add);
 		if (listExpenses.size() == 0) {
-			return new ResponseEntity<String>("No hay gastos cargados",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("No hay gastos cargados", HttpStatus.NOT_FOUND);
 		}
 
 		return new ResponseEntity<List<Expense>>(listExpenses, HttpStatus.OK);
@@ -69,7 +69,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	public ResponseEntity<?> save(Expense expense) {
-		
+
 		expense.getDivisions().stream().forEach(division -> {
 			Payment p = new Payment(division.getUserOwner(), division.getAmount(), false, LocalDate.now());
 			paymentService.save(p);
@@ -80,7 +80,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		} else {
 			expense.setCategory(categoryService.findByname(expense.getCategory().getName()).get());
 		}
-		
+
 		expenseService.save(expense);
 		Expense e = expenseService.findById(expense.getId()).orElse(null);
 		if (e == null)
@@ -98,14 +98,15 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 		return new ResponseEntity<Expense>(HttpStatus.OK);
 	}
-	
-public ResponseEntity<?> edit(Expense expense) {
+
+	public ResponseEntity<?> edit(Expense expense) {
 		Expense expenseSearched = expenseService.findById(expense.getId()).orElse(null);
-		System.out.print("AAAAAAAAAAAAAAAAAAAAAASADASDADSAAAA"+expense);
-		if (expenseSearched == null) 
-			return new ResponseEntity<String>("Gasto no encontrado", HttpStatus.BAD_REQUEST);
-		
-		return this.save(expense);
+		if (expenseSearched == null)
+			return new ResponseEntity<String>("Expense Not Found", HttpStatus.BAD_REQUEST);
+
+		this.expenseService.save(expense);
+		expenseSearched = expenseService.findById(expense.getId()).orElse(null);
+		return new ResponseEntity<Expense>(expenseSearched, HttpStatus.OK);
 	}
 
 	public ResponseEntity<Expense> delete(int id) {
