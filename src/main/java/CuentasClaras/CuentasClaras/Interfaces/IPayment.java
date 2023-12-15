@@ -1,6 +1,5 @@
 package CuentasClaras.CuentasClaras.Interfaces;
 
-import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 

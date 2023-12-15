@@ -2,8 +2,9 @@ package CuentasClaras.CuentasClaras.Modelos;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import CuentasClaras.CuentasClaras.Serializers.*;
 import jakarta.persistence.*;
 
 @Entity
@@ -23,6 +24,7 @@ public class Expense  {
 	private String img;
 
 	@OneToMany(mappedBy="expense",cascade = CascadeType.ALL)
+	@JsonSerialize(contentUsing = CustomDivisionSerializer.class)
 	private List<Division> divisions;
 
 	@Column(name = "isRecurrent")
@@ -43,14 +45,17 @@ public class Expense  {
 	
 	//Si el gasto lo realizo mas de una persona esto es mayor a 1, sino es 1;
 	@OneToMany(mappedBy="expense")
+	@JsonSerialize(contentUsing = CustomMultipleUserSerializer.class)
 	private List<MultipleUser> amountUsers;
 	
 	//Si es de tipo "group" se utiliza esta variable
 	@ManyToOne
+	@JsonSerialize(using = CustomGroupSerializer.class)
 	private Group groupOwner;
 	
 	//Si es de tipo "user" se utiliza esta variable
 	@ManyToOne
+	@JsonSerialize(using = CustomUserSerializer.class)
 	private User userOwner;
 	
 

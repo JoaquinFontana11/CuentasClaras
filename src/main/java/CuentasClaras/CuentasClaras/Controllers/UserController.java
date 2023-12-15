@@ -3,16 +3,12 @@ package CuentasClaras.CuentasClaras.Controllers;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
-import CuentasClaras.CuentasClaras.Interfaces.IUser;
 import CuentasClaras.CuentasClaras.Modelos.*;
 import CuentasClaras.CuentasClaras.Services.UserService;
-import CuentasClaras.CuentasClaras.ServicesImpl.UserServiceImpl;
 
 @RestController
 @RequestMapping("users")

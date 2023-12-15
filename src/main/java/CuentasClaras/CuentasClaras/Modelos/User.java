@@ -1,12 +1,9 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
-import java.lang.annotation.Repeatable;
+
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import CuentasClaras.CuentasClaras.Serializers.*;

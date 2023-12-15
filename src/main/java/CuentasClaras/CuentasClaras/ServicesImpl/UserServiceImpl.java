@@ -1,14 +1,12 @@
 package CuentasClaras.CuentasClaras.ServicesImpl;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.annotation.JsonView;
 
 import CuentasClaras.CuentasClaras.Controllers.PaymentController;
 import CuentasClaras.CuentasClaras.Interfaces.IUser;

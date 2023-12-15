@@ -3,6 +3,9 @@ package CuentasClaras.CuentasClaras.Modelos;
 
 import java.util.*;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import CuentasClaras.CuentasClaras.Serializers.CustomUserSerializer;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,6 +22,7 @@ public class Group{
 	private String name;
 
 	@ManyToMany(mappedBy = "groups")
+	@JsonSerialize(contentUsing = CustomUserSerializer.class)
 	private List<User> members;
 
 	@ManyToOne

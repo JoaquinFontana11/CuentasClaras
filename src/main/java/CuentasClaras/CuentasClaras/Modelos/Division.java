@@ -3,7 +3,6 @@ package CuentasClaras.CuentasClaras.Modelos;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
 
 @Entity
