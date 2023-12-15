@@ -1,14 +1,21 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
+
 import java.time.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
 @Entity
 @Access(AccessType.FIELD)
 @Table(name="payments")
-public class Payment {
-	
+public class Payment{
+	/**
+	 * 
+	 */
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -23,6 +30,7 @@ public class Payment {
 	@Column(name="date")
 	private LocalDate date;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "debtor")
 	private User debtor;

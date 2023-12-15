@@ -1,14 +1,24 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
+import java.lang.annotation.Repeatable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import CuentasClaras.CuentasClaras.Serializers.*;
 
 import jakarta.persistence.*;
 
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "users")
-public class User {
-	
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class User{
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -26,6 +36,7 @@ public class User {
 	@Column(name = "email")
 	private String email;
 	
+	@JsonIgnore
 	@Column(name = "password")
 	private String password;
 	
@@ -35,23 +46,22 @@ public class User {
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
 	private List<Invitation> invitations;
 	
-
 	@OneToMany(mappedBy="debtor",cascade = CascadeType.ALL)
 	private List<Payment> payments;
 	
-
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(
 			name = "user_groups", 
 			joinColumns = @JoinColumn(name = "user_id"), 
 			inverseJoinColumns = @JoinColumn(name = "groups_id")
 	)
+	@JsonSerialize(contentUsing = CustomGroupSerializer.class)
 	private List<Group> groups;
 
 	@OneToMany(mappedBy="friend")
+	@JsonSerialize(contentUsing = CustomFriendshipSerializer.class)
 	private List<Friendship> friendships;
 	
-
 	@OneToMany(mappedBy="suggest")
 	private List<Suggestion> suggestions;
 	
@@ -76,12 +86,25 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() {
+	public void addFriend(Friendship friend) {
+		friendships.add(friend);
+	}
+
+	
+	public void addGroups(Group group) {
+		this.groups.add(group);
+	}
+	
+	public void addInvitation(Invitation invitation){
+		this.invitations.add(invitation);
+	}
+
+	public String getUserName() {
 		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.userName = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getName() {
@@ -116,9 +139,36 @@ public class User {
 		this.password = password;
 	}
 
+	public double getMoney() {
+		return money;
+	}
 
-	public void addFriend(Friendship friend) {
-		friendships.add(friend);
+	public void setMoney(double money) {
+		this.money = money;
+	}
+
+	public List<Invitation> getInvitations() {
+		return invitations;
+	}
+
+	public void setInvitations(List<Invitation> invitations) {
+		this.invitations = invitations;
+	}
+
+	public List<Payment> getPayments() {
+		return payments;
+	}
+
+	public void setPayments(List<Payment> payments) {
+		this.payments = payments;
+	}
+
+	public List<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
 	}
 
 	public List<Friendship> getFriendships() {
@@ -137,16 +187,5 @@ public class User {
 		this.suggestions = suggestions;
 	}
 	
-	public void addGroups(Group group) {
-		this.groups.add(group);
-	}
-	
-	public void addInvitation(Invitation invitation){
-		this.invitations.add(invitation);
-	}
-
-	public List<Group> getGroups(){
-		return groups;
-	}
 }
 

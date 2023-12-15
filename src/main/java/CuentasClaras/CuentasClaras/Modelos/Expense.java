@@ -1,17 +1,15 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
-import java.io.Serializable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "expenses")
-public class Expense implements Serializable {
-	
-
-	private static final long serialVersionUID = 3441111799219876457L;
+public class Expense  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

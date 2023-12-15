@@ -1,5 +1,6 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
+
 import jakarta.persistence.*;
 
 @Entity
@@ -7,8 +8,8 @@ import jakarta.persistence.*;
 @Table(name="categories", uniqueConstraints = { 
 		@UniqueConstraint(name = "name", columnNames = { "name" }) 
 		})
-public class Category {
-	
+public class Category  {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

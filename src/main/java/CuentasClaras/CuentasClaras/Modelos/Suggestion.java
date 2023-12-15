@@ -1,6 +1,6 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
-import java.util.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
@@ -8,17 +8,24 @@ import jakarta.persistence.*;
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "suggestions")
-public class Suggestion {
+public class Suggestion  {
     
-    @Id
+    /**
+	 * 
+	 */
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
+	//Tu sugerido
     @ManyToOne
     @JoinColumn(name = "userSuggestId")
     private User user;
 
+    //Vos
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "suggestId")
     private User suggest;

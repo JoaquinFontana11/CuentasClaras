@@ -74,8 +74,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 			Payment p = new Payment(division.getUserOwner(), division.getAmount(), false, LocalDate.now());
 			paymentService.save(p);
 		});
-		
-		
+
 		if ((categoryService.findByname(expense.getCategory().getName()).orElse(null)) == null) {
 			return new ResponseEntity<String>("Category not found", HttpStatus.BAD_REQUEST);
 		} else {
@@ -91,18 +90,21 @@ public class ExpenseServiceImpl implements ExpenseService {
 			MUsers.setExpense(expense);
 			multipleUserService.save(MUsers);
 		});
-		
+
 		expense.getDivisions().stream().forEach(division -> {
 			division.setExpense(expense);
 			divisionService.save(division);
 		});
+
 		return new ResponseEntity<Expense>(HttpStatus.OK);
 	}
 	
 public ResponseEntity<?> edit(Expense expense) {
 		Expense expenseSearched = expenseService.findById(expense.getId()).orElse(null);
+		System.out.print("AAAAAAAAAAAAAAAAAAAAAASADASDADSAAAA"+expense);
 		if (expenseSearched == null) 
 			return new ResponseEntity<String>("Gasto no encontrado", HttpStatus.BAD_REQUEST);
+		
 		return this.save(expense);
 	}
 

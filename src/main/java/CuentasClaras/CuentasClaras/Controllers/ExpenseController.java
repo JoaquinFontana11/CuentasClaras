@@ -44,6 +44,7 @@ public class ExpenseController {
 	
 	@PostMapping("/edit")
 	public ResponseEntity<?> edit(@RequestBody Expense expense) {
+		System.out.println("ENTREEEEEEEEEEEEEE");
 		return this.expenseService.edit(expense);
 	}
 	

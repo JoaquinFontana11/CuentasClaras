@@ -1,5 +1,8 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -24,6 +27,7 @@ public class Invitation {
 	private String inviteName;
 	
 	//receptor
+	@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
@@ -81,4 +85,6 @@ public class Invitation {
 	public void setUser(User user){
 		this.user = user;
 	}
+	
+	
 }

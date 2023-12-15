@@ -1,15 +1,14 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
-import java.util.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.*;
 
 import jakarta.persistence.*;
 
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "party")
-public class Group {
+public class Group{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

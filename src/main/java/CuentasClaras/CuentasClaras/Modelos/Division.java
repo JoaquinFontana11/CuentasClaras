@@ -1,13 +1,16 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "divisions")
 public class Division {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -19,6 +22,7 @@ public class Division {
 	@ManyToOne
 	private User userOwner;
 	
+	@JsonIgnore
 	@ManyToOne
 	private Expense expense;
 

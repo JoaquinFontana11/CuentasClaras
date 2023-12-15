@@ -1,12 +1,19 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
 @Access(AccessType.FIELD)
 @Table(name="multiple_users")
-public class MultipleUser {
+public class MultipleUser{
 	
+	/**
+	 * 
+	 */
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -18,6 +25,7 @@ public class MultipleUser {
 	@OneToOne
 	private User userOwner;
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="expense")
 	private Expense expense;

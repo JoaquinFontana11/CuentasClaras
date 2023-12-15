@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import CuentasClaras.CuentasClaras.Controllers.PaymentController;
 import CuentasClaras.CuentasClaras.Interfaces.IUser;
 import CuentasClaras.CuentasClaras.Modelos.Invitation;
@@ -23,13 +25,14 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PaymentController paymentController;
 
+	
 	public ResponseEntity<List<User>> findAll() {
 		List<User> listUser = (List<User>) userService.findAll();
 		if (listUser.size() == 0) {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity(listUser, HttpStatus.OK);
+		return new ResponseEntity<List<User>>(listUser, HttpStatus.OK);
 	}
 
 	public ResponseEntity<User> findById(int id) {
@@ -68,7 +71,7 @@ public class UserServiceImpl implements UserService {
 		User userWhoAdd = userService.findById(idUserWhoAdd).orElse(null);
 
 		if ((userWhoAdd != null) && (userToAdd != null)) {
-			Invitation invitation = new Invitation(userToAdd.getUsername(), false, userWhoAdd);
+			Invitation invitation = new Invitation(userToAdd.getUserName(), false, userWhoAdd);
 			userToAdd.addInvitation(invitation);
 			userService.save(userToAdd);
 			return new ResponseEntity<String>("Invitation sended", HttpStatus.OK);
