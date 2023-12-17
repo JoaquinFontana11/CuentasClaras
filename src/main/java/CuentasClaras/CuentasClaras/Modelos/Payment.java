@@ -66,9 +66,10 @@ public class Payment{
 		this.date = date;
 	}
 
-	public Payment(User debtor, double amount, boolean accredited, LocalDate date) {
+	public Payment(User debtor,Expense expense, double amount, boolean accredited, LocalDate date) {
 		super();
 		this.amount = amount;
+		this.expense = expense;
 		this.accredited = accredited;
 		this.date = date;
 	}

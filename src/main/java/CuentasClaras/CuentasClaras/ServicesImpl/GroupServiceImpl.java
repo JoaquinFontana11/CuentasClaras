@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import CuentasClaras.CuentasClaras.Interfaces.ICategory;
 import CuentasClaras.CuentasClaras.Interfaces.IGroup;
 import CuentasClaras.CuentasClaras.Interfaces.IUser;
-import CuentasClaras.CuentasClaras.Modelos.Group;
-import CuentasClaras.CuentasClaras.Modelos.Invitation;
-import CuentasClaras.CuentasClaras.Modelos.User;
+import CuentasClaras.CuentasClaras.Modelos.*;
 import CuentasClaras.CuentasClaras.Services.GroupService;
 
 @Service
@@ -52,9 +50,16 @@ public class GroupServiceImpl implements GroupService {
 		}
 	}
 
-	public ResponseEntity<?> edit(Group group) {
+	public ResponseEntity<?> edit(Group group,String categoryName) {
 		Group groupSearched = groupService.findById(group.getId()).orElse(null);
+		Optional<Category> categorySearched = categoryService.findByname(categoryName);
+		if(categorySearched.isEmpty()) {
+			return new ResponseEntity<String>("Category not found", HttpStatus.BAD_REQUEST);
+		}
+		
 		if (groupSearched != null) {
+			group.setMembers(groupSearched.getMembers());//Si queres agregar o eliminar un miembro, usar los endpoints correspondientes en el controller
+			group.setCategory(categorySearched.get());
 			return this.save(group);
 		} else {
 			return new ResponseEntity<String>("Group not found", HttpStatus.BAD_REQUEST);

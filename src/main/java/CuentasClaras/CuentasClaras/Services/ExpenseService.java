@@ -17,7 +17,7 @@ public interface ExpenseService {
 	
 	public ResponseEntity<?> save(Expense expense);
 	
-	public ResponseEntity<?> edit(Expense expense);
+	public ResponseEntity<?> edit(Expense expense,String categoryName);
 	
 	public ResponseEntity<Expense> delete(int id);
 }

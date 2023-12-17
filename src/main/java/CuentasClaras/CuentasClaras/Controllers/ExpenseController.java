@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import CuentasClaras.CuentasClaras.Modelos.*;
+import CuentasClaras.CuentasClaras.Request.EditExpenseDTO;
 import CuentasClaras.CuentasClaras.Services.ExpenseService;
 
 @RestController
@@ -43,9 +44,17 @@ public class ExpenseController {
 	}
 	
 	@PostMapping("/edit")
-	public ResponseEntity<?> edit(@RequestBody Expense expense) {
-		System.out.println("ENTREEEEEEEEEEEEEE");
-		return this.expenseService.edit(expense);
+	public ResponseEntity<?> edit(@RequestBody EditExpenseDTO expenseDTO) {
+		Expense expense=new Expense();
+		
+		expense.setId(expenseDTO.id());
+		expense.setAmount(expenseDTO.amount());
+		expense.setImg(expenseDTO.img());
+		expense.setRecurrent(expense.isRecurrent());
+		expense.setRecurrency(expenseDTO.recurrency());
+		expense.setCantRecurrency(expenseDTO.cantRecurrency());
+		
+		return this.expenseService.edit(expense,expenseDTO.categoryName());
 	}
 	
 	@DeleteMapping("/delete/{id}")

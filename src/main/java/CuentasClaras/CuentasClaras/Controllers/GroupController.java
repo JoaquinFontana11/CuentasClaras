@@ -10,6 +10,7 @@ import CuentasClaras.CuentasClaras.Modelos.Group;
 import CuentasClaras.CuentasClaras.Modelos.Invitation;
 import CuentasClaras.CuentasClaras.Modelos.User;
 import CuentasClaras.CuentasClaras.Request.AddMemberDTO;
+import CuentasClaras.CuentasClaras.Request.EditGroupDTO;
 import CuentasClaras.CuentasClaras.Services.GroupService;
 
 @RestController
@@ -38,8 +39,11 @@ public class GroupController {
 	}
 	
 	@PostMapping("/edit")
-	public ResponseEntity<?> edit (@RequestBody Group group){
-		return groupService.edit(group);
+	public ResponseEntity<?> edit (@RequestBody EditGroupDTO groupDTO){
+		Group group=new Group();
+		group.setId(groupDTO.id());
+		group.setName(groupDTO.name());
+		return groupService.edit(group,groupDTO.categoryName());
 	}
 	
 	@GetMapping("/findByName/{name}")

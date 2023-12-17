@@ -25,7 +25,7 @@ public class Expense  {
 
 	@OneToMany(mappedBy="expense",cascade = CascadeType.ALL)
 	@JsonSerialize(contentUsing = CustomDivisionSerializer.class)
-	private List<Division> divisions;
+	private List<Division> divisions;//recordar actualizar
 
 	@Column(name = "isRecurrent")
 	private boolean isRecurrent;

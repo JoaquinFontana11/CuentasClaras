@@ -13,8 +13,7 @@ import CuentasClaras.CuentasClaras.Interfaces.IDivision;
 import CuentasClaras.CuentasClaras.Interfaces.IExpense;
 import CuentasClaras.CuentasClaras.Interfaces.IMultipleUser;
 import CuentasClaras.CuentasClaras.Interfaces.IPayment;
-import CuentasClaras.CuentasClaras.Modelos.Expense;
-import CuentasClaras.CuentasClaras.Modelos.Payment;
+import CuentasClaras.CuentasClaras.Modelos.*;
 import CuentasClaras.CuentasClaras.Services.ExpenseService;
 
 @Service
@@ -67,11 +66,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	public ResponseEntity<?> save(Expense expense) {
 
-		expense.getDivisions().stream().forEach(division -> {
-			Payment p = new Payment(division.getUserOwner(), division.getAmount(), false, LocalDate.now());
-			paymentService.save(p);
-		});
-
 		if ((categoryService.findByname(expense.getCategory().getName()).orElse(null)) == null) {
 			return new ResponseEntity<String>("Category not found", HttpStatus.BAD_REQUEST);
 		} else {
@@ -84,31 +78,48 @@ public class ExpenseServiceImpl implements ExpenseService {
 		if (e == null)
 			return new ResponseEntity<Expense>(HttpStatus.BAD_REQUEST);
 
+		expense.getDivisions().stream().forEach(division -> {
+			division.setExpense(e);
+			divisionService.save(division);
+		});
+
+		e.getDivisions().stream().forEach(division -> {
+			Payment p = new Payment(division.getUserOwner(), e, division.getAmount(), false, LocalDate.now());
+			paymentService.save(p);
+		});
+
 		expense.getAmountUsers().stream().forEach(MUsers -> {
-			MUsers.setExpense(expense);
+			MUsers.setExpense(e);
 			multipleUserService.save(MUsers);
 		});
 
 		expense.getDivisions().stream().forEach(division -> {
-			division.setExpense(expense);
+			division.setExpense(e);
 			divisionService.save(division);
 		});
 
 		return new ResponseEntity<Expense>(HttpStatus.OK);
 	}
 
-	public ResponseEntity<?> edit(Expense expense) {
+	public ResponseEntity<?> edit(Expense expense, String categoryName) {
+
 		Expense expenseSearched = expenseService.findById(expense.getId()).orElse(null);
 		if (expenseSearched == null)
 			return new ResponseEntity<String>("Expense Not Found", HttpStatus.BAD_REQUEST);
 
-		if ((categoryService.findByname(expense.getCategory().getName()).orElse(null)) == null)
+		Optional<Category> categorySearched = categoryService.findByname(categoryName);
+		if (categorySearched.isEmpty())
 			return new ResponseEntity<String>("Category not found", HttpStatus.BAD_REQUEST);
-		
-		expense.setCategory(categoryService.findByname(expense.getCategory().getName()).get());
+		expense.setCategory(categorySearched.get());
 
+		expense.setType(expenseSearched.getType());
+		expense.setDivisions(expenseSearched.getDivisions());
+		expense.setUserOwner(expenseSearched.getUserOwner());
+		expense.setGroupOwner(expenseSearched.getGroupOwner());
+		expense.setAmountUsers(expenseSearched.getAmountUsers());
+
+		// setear todas las listas del expense, para que no se pierdan
 		this.expenseService.save(expense);
-		expenseSearched = expenseService.findById(expense.getId()).orElse(null);
 		return new ResponseEntity<Expense>(expenseSearched, HttpStatus.OK);
 	}
 
