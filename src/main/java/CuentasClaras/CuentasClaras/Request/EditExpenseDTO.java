@@ -11,6 +11,6 @@ public record EditExpenseDTO(
 		boolean isRecurrent,
 		String recurrency,
 		int cantRecurrency,
-		//List<Division> divisions,
+		List<Division> divisions,
 		String categoryName
 		) {}

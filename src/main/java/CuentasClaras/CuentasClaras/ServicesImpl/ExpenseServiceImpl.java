@@ -82,7 +82,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 			division.setExpense(e);
 			divisionService.save(division);
 		});
-
 		e.getDivisions().stream().forEach(division -> {
 			Payment p = new Payment(division.getUserOwner(), e, division.getAmount(), false, LocalDate.now());
 			paymentService.save(p);
@@ -111,6 +110,23 @@ public class ExpenseServiceImpl implements ExpenseService {
 		if (categorySearched.isEmpty())
 			return new ResponseEntity<String>("Category not found", HttpStatus.BAD_REQUEST);
 		expense.setCategory(categorySearched.get());
+		
+		expense.getDivisions().stream().forEach(division -> {
+			divisionService.save(division);
+		});
+		
+		expense.getDivisions().stream().forEach(division -> {
+			Optional<Payment> p = paymentService.findByDebtorANDExpense(division.getUserOwner().getId(), division.getExpense().getId());
+			if(p.isPresent()) {
+				Payment pReal = p.get();
+				pReal.setAmount(division.getAmount());
+				paymentService.save(pReal);
+			} else {
+				Payment pReal = new Payment(division.getUserOwner(), expense, division.getAmount(), false, LocalDate.now());
+			paymentService.save(pReal);
+			}
+			
+		});
 
 		expense.setType(expenseSearched.getType());
 		expense.setDivisions(expenseSearched.getDivisions());
@@ -118,7 +134,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 		expense.setGroupOwner(expenseSearched.getGroupOwner());
 		expense.setAmountUsers(expenseSearched.getAmountUsers());
 
-		// setear todas las listas del expense, para que no se pierdan
 		this.expenseService.save(expense);
 		return new ResponseEntity<Expense>(expenseSearched, HttpStatus.OK);
 	}

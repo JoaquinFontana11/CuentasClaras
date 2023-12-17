@@ -68,6 +68,7 @@ public class Payment{
 
 	public Payment(User debtor,Expense expense, double amount, boolean accredited, LocalDate date) {
 		super();
+		this.debtor = debtor;
 		this.amount = amount;
 		this.expense = expense;
 		this.accredited = accredited;

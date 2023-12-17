@@ -3,6 +3,9 @@ package CuentasClaras.CuentasClaras.Modelos;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import CuentasClaras.CuentasClaras.Serializers.CustomExpenseSerializer;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,8 +24,8 @@ public class Division {
 	@ManyToOne
 	private User userOwner;
 	
-	@JsonIgnore
 	@ManyToOne
+	@JsonSerialize(contentUsing = CustomExpenseSerializer.class)
 	private Expense expense;
 
 	public Division() {

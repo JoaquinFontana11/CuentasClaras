@@ -53,6 +53,7 @@ public class ExpenseController {
 		expense.setRecurrent(expense.isRecurrent());
 		expense.setRecurrency(expenseDTO.recurrency());
 		expense.setCantRecurrency(expenseDTO.cantRecurrency());
+		expense.setDivisions(expenseDTO.divisions());
 		
 		return this.expenseService.edit(expense,expenseDTO.categoryName());
 	}
