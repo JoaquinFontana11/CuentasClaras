@@ -37,7 +37,6 @@ public class UserServiceImpl implements UserService {
 		User user = userService.findById(id).orElse(null);
 		if (user == null)
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 

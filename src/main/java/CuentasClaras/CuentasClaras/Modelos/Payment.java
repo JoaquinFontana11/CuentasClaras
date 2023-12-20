@@ -54,6 +54,14 @@ public class Payment{
 		return accredited;
 	}
 
+	public Expense getExpense() {
+		return expense;
+	}
+
+	public void setExpense(Expense expense) {
+		this.expense = expense;
+	}
+
 	public void setAccredited(boolean accredited) {
 		this.accredited = accredited;
 	}

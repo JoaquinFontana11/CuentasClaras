@@ -16,6 +16,9 @@ public class CustomExpenseSerializer extends JsonSerializer<Expense> {
 		jsonGenerator.writeStartObject();
 
 		jsonGenerator.writeNumberField("id_expense", expense.getId());
+		jsonGenerator.writeBooleanField("expense_isReccurent", expense.isRecurrent());
+		jsonGenerator.writeStringField("expense_recurrency", expense.getRecurrency());
+		jsonGenerator.writeNumberField("expense_cantRecurrency", expense.getCantRecurrency());
 
 		jsonGenerator.writeEndObject();
 	}
