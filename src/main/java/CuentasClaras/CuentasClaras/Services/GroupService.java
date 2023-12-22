@@ -14,4 +14,6 @@ public interface GroupService {
     
     public ResponseEntity<?> findByname(String name);
     
+    public ResponseEntity<?> findById(int id);
+    
 }

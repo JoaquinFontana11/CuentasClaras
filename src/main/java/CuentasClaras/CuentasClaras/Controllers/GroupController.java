@@ -3,7 +3,6 @@ package CuentasClaras.CuentasClaras.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.*;
 
 import CuentasClaras.CuentasClaras.Modelos.Group;
@@ -50,6 +49,11 @@ public class GroupController {
 	public ResponseEntity<?> findByName(@PathVariable String name) {
 		ResponseEntity<?> group = groupService.findByname(name);
 		return group;
+	}
+	
+	@GetMapping("/find/{id}")
+	public ResponseEntity<Group> findById(@PathVariable int id) {
+		return (ResponseEntity<Group>) groupService.findById(id);
 	}
 	
 	

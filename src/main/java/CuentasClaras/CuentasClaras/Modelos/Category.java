@@ -32,6 +32,14 @@ public class Category  {
 		this.name = name;
 	}
 
+	public boolean isGroup() {
+		return isGroup;
+	}
+
+	public void setGroup(boolean isGroup) {
+		this.isGroup = isGroup;
+	}
+
 	public String getIcon() {
 		return icon;
 	}

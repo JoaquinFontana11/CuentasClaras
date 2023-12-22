@@ -48,12 +48,10 @@ public class ExpenseController {
 		Expense expense=new Expense();
 		
 		expense.setId(expenseDTO.id());
-		expense.setAmount(expenseDTO.amount());
 		expense.setImg(expenseDTO.img());
 		expense.setRecurrent(expense.isRecurrent());
 		expense.setRecurrency(expenseDTO.recurrency());
 		expense.setCantRecurrency(expenseDTO.cantRecurrency());
-		expense.setDivisions(expenseDTO.divisions());
 		
 		return this.expenseService.edit(expense,expenseDTO.categoryName());
 	}

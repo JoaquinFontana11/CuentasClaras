@@ -110,29 +110,14 @@ public class ExpenseServiceImpl implements ExpenseService {
 		if (categorySearched.isEmpty())
 			return new ResponseEntity<String>("Category not found", HttpStatus.BAD_REQUEST);
 		expense.setCategory(categorySearched.get());
-		
-		expense.getDivisions().stream().forEach(division -> {
-			divisionService.save(division);
-		});
-		
-		expense.getDivisions().stream().forEach(division -> {
-			Optional<Payment> p = paymentService.findByDebtorANDExpense(division.getUserOwner().getId(), division.getExpense().getId());
-			if(p.isPresent()) {
-				Payment pReal = p.get();
-				pReal.setAmount(division.getAmount());
-				paymentService.save(pReal);
-			} else {
-				Payment pReal = new Payment(division.getUserOwner(), expense, division.getAmount(), false, LocalDate.now());
-			paymentService.save(pReal);
-			}
-			
-		});
 
+		
 		expense.setType(expenseSearched.getType());
 		expense.setDivisions(expenseSearched.getDivisions());
 		expense.setUserOwner(expenseSearched.getUserOwner());
 		expense.setGroupOwner(expenseSearched.getGroupOwner());
 		expense.setAmountUsers(expenseSearched.getAmountUsers());
+		expense.setAmount(expenseSearched.getAmount());
 
 		this.expenseService.save(expense);
 		return new ResponseEntity<Expense>(expenseSearched, HttpStatus.OK);

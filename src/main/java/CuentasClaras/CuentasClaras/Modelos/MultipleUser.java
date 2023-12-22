@@ -22,11 +22,11 @@ public class MultipleUser{
 	@Column(name="amount")
 	private double amount;
 	
-	@OneToOne
+	@ManyToOne
 	private User userOwner;
 	
 	@JsonIgnore
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="expense")
 	private Expense expense;
 	

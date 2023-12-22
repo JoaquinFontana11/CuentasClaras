@@ -73,4 +73,11 @@ public class GroupServiceImpl implements GroupService {
 		
 		return new ResponseEntity<Group>(group.get(), HttpStatus.OK);
 	}
+	
+	public ResponseEntity<Group> findById(int id) {
+		Group group = groupService.findById(id).orElse(null);
+		if (group == null)
+			return new ResponseEntity<Group>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Group>(group, HttpStatus.OK);
+	}
 }
