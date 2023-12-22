@@ -34,5 +34,10 @@ public class CategoryController {
 		return this.categoryService.find(id);
 	}
 	
+	@GetMapping("find/{name}")
+	public ResponseEntity<?> findByName(@PathVariable String name){
+		return this.categoryService.findByName(name);
+	}
+	
 	
 }

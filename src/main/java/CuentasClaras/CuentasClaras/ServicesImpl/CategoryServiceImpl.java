@@ -45,5 +45,14 @@ public class CategoryServiceImpl implements CategoryService {
 			return new ResponseEntity<Category>(c,HttpStatus.OK);
 		}
 	}
+	
+	public ResponseEntity<?> findByName(String name) {
+		Category c = this.categoryService.findByname(name).orElse(null);
+		if (c == null) {
+			return new ResponseEntity<String>("Category not found", HttpStatus.BAD_REQUEST);
+		}else {
+			return new ResponseEntity<Category>(c,HttpStatus.OK);
+		}
+	}
 
 }

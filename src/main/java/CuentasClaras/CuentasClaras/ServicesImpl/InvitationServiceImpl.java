@@ -9,6 +9,7 @@ import CuentasClaras.CuentasClaras.Controllers.GroupController;
 import CuentasClaras.CuentasClaras.Interfaces.IFriendship;
 import CuentasClaras.CuentasClaras.Interfaces.IInvitation;
 import CuentasClaras.CuentasClaras.Interfaces.IUser;
+import CuentasClaras.CuentasClaras.Modelos.ApiError;
 import CuentasClaras.CuentasClaras.Modelos.Expense;
 import CuentasClaras.CuentasClaras.Modelos.Friendship;
 import CuentasClaras.CuentasClaras.Modelos.Group;
@@ -32,7 +33,7 @@ public class InvitationServiceImpl implements InvitationService {
 	public ResponseEntity<?> accept(int id) {
 		Invitation invitation = invitationService.findById(id).orElse(null);
 		if (invitation == null)
-			return new ResponseEntity<String>("invitacion no existente",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ApiError>(new ApiError("invitacion no existente"),HttpStatus.NOT_FOUND);
 		
 		if(invitation.isGroup()) {
 		Group group = (Group) groupService.findByName(invitation.getInviteName()).getBody();
@@ -48,7 +49,7 @@ public class InvitationServiceImpl implements InvitationService {
 		userService.save(invitation.getUser());
 		invitation.setState(true);
 		invitationService.save(invitation);
-		return new ResponseEntity<String>("Invitacion aceptada",HttpStatus.OK);
+		return new ResponseEntity<ApiError>(new ApiError("Invitacion aceptada"),HttpStatus.OK);
 		
 	}
 	
@@ -56,8 +57,8 @@ public class InvitationServiceImpl implements InvitationService {
 		invitationService.deleteById(id);
 		Invitation i = invitationService.findById(id).orElse(null);
 		if (i == null)
-			return new ResponseEntity<String>("Invitacion rechazada",HttpStatus.OK);
+			return new ResponseEntity<ApiError>(new ApiError("Invitacion rechazada"),HttpStatus.OK);
 
-		return new ResponseEntity<Expense>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<ApiError>(new ApiError("Ocurrio un error"),HttpStatus.BAD_REQUEST);
 	}
 }
