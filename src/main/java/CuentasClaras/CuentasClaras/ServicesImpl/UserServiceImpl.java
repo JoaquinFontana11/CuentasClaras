@@ -39,6 +39,13 @@ public class UserServiceImpl implements UserService {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
+	
+	public ResponseEntity<User> findByEmail(String email) {
+		User user = (User) userService.findByemail(email).orElse(null);
+		if (user == null)
+			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
 
 	public ResponseEntity<?> save(User user) {
 		try {

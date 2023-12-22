@@ -12,4 +12,6 @@ public interface CategoryService {
 	public ResponseEntity<?> save(Category category);
 	
 	public ResponseEntity<?> find(int id);
+
+	public ResponseEntity<?> findByName(String name);
 }

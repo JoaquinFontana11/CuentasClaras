@@ -52,5 +52,11 @@ public class GroupController {
 		return group;
 	}
 	
+	@GetMapping("/findById/{id}")
+	public ResponseEntity<?> findById(@PathVariable int id) {
+		ResponseEntity<?> group = groupService.findById(id);
+		return group;
+	}
+	
 	
 }
