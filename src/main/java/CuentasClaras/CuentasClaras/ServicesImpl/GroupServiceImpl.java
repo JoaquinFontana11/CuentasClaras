@@ -49,6 +49,7 @@ public class GroupServiceImpl implements GroupService {
 			return new ResponseEntity<String>("Group not found", HttpStatus.BAD_REQUEST);
 		}
 	}
+	
 
 	public ResponseEntity<?> edit(Group group,String categoryName) {
 		Group groupSearched = groupService.findById(group.getId()).orElse(null);
@@ -74,10 +75,12 @@ public class GroupServiceImpl implements GroupService {
 		return new ResponseEntity<Group>(group.get(), HttpStatus.OK);
 	}
 	
-	public ResponseEntity<Group> findById(int id) {
-		Group group = groupService.findById(id).orElse(null);
-		if (group == null)
-			return new ResponseEntity<Group>(HttpStatus.NOT_FOUND);
-		return new ResponseEntity<Group>(group, HttpStatus.OK);
+	public ResponseEntity<?> findById(int id) {
+		Optional<Group> group = groupService.findById(id);
+		if(group.isEmpty()) 
+			return new ResponseEntity<String>("Group not found", HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity<Group>(group.get(), HttpStatus.OK);
 	}
+	
 }

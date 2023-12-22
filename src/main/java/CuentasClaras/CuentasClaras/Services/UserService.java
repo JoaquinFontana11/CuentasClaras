@@ -14,6 +14,8 @@ public interface UserService {
 	
 	public ResponseEntity<User> findById(int id);
 	
+	public ResponseEntity<User> findByEmail(String email);
+	
 	public ResponseEntity save(User user);
 	
 	public ResponseEntity delete(int id);

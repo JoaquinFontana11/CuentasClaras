@@ -8,5 +8,7 @@ import CuentasClaras.CuentasClaras.Modelos.User;
 public interface IUser extends CrudRepository<User,Integer> {
 
 	public Optional<?> findByuserName(String username);
+	
+	public Optional<?> findByemail(String email);
 
 }
