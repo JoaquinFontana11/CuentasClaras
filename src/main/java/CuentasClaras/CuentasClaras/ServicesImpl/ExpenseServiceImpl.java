@@ -71,7 +71,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		} else {
 			expense.setCategory(categoryService.findByname(expense.getCategory().getName()).get());
 		}
-
+		expense.setDate(new Date());
 		expenseService.save(expense);
 
 		Expense e = expenseService.findById(expense.getId()).orElse(null);

@@ -1,5 +1,6 @@
 package CuentasClaras.CuentasClaras.Modelos;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -35,6 +36,9 @@ public class Expense  {
 
 	@Column(name = "cantRecurrency")
 	private int cantRecurrency;
+	
+	@Column(name = "date")
+	private Date date;
 
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Category category;
@@ -186,4 +190,15 @@ public class Expense  {
 		this.isRecurrent = isRecurrent;
 	}
 
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	
+	
+	
 }
